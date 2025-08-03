@@ -1,0 +1,366 @@
+/* styles.css */
+:root {
+  --bg-color: #f8f8f8;
+  --text-color: #333;
+  --border-color: #ddd;
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --editor-bg-color: #fff;
+  --editor-text-color: #333;
+  --line-number-color: #aaa;
+  --error-bg-color: #ffe0e0;
+  --error-text-color: #c00;
+  --splitter-color: #ccc;
+
+  /* SVG Diagram Colors */
+  --diagram-node-fill: #e6f7ff;
+  --diagram-node-stroke: #91d5ff;
+  --diagram-text-fill: #333;
+  --diagram-edge-stroke: #555;
+  --diagram-marker-fill: #555;
+  --diagram-participant-fill: #f0f0f0;
+  --diagram-participant-stroke: #ccc;
+  --diagram-entity-fill: #f9f9f9;
+  --diagram-entity-stroke: #bbb;
+}
+
+html[data-theme="dark"] {
+  --bg-color: #282c34;
+  --text-color: #abb2bf;
+  --border-color: #3e4451;
+  --primary-color: #61afef;
+  --secondary-color: #848d9a;
+  --editor-bg-color: #21252b;
+  --editor-text-color: #abb2bf;
+  --line-number-color: #6a737d;
+  --error-bg-color: #4a2d2d;
+  --error-text-color: #ff6b6b;
+  --splitter-color: #4a5059;
+
+  /* SVG Diagram Colors */
+  --diagram-node-fill: #3b4252;
+  --diagram-node-stroke: #81a1c1;
+  --diagram-text-fill: #d8dee9;
+  --diagram-edge-stroke: #d8dee9;
+  --diagram-marker-fill: #d8dee9;
+  --diagram-participant-fill: #2e3440;
+  --diagram-participant-stroke: #4c566a;
+  --diagram-entity-fill: #333842;
+  --diagram-entity-stroke: #666e7b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.left-pane,
+.right-pane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden; /* Important for scrollable content inside */
+}
+
+.left-pane {
+  flex-basis: 50%; /* Initial width, adjusted by splitter */
+  min-width: 300px; /* Minimum width for the editor */
+  max-width: 80%; /* Maximum width for the editor */
+  border-right: 1px solid var(--border-color);
+  padding: 10px;
+}
+
+.right-pane {
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.splitter {
+  width: 8px;
+  cursor: ew-resize;
+  background-color: var(--splitter-color);
+  flex-shrink: 0; /* Prevents splitter from shrinking */
+}
+
+.splitter:hover {
+  background-color: var(--primary-color);
+}
+
+.splitter:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: -2px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.controls button {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--editor-bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.controls button:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+
+.controls button:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.sample-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+#themeToggleBtn {
+  font-size: 1.2em;
+  padding: 4px 8px;
+}
+
+.editor-wrapper {
+  display: flex;
+  flex-grow: 1;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden; /* Ensure line numbers don't overflow */
+}
+
+.line-numbers {
+  flex-shrink: 0;
+  width: 40px;
+  padding: 10px 5px 10px 0;
+  text-align: right;
+  background-color: var(--editor-bg-color);
+  color: var(--line-number-color);
+  font-family: monospace;
+  font-size: 0.9em;
+  line-height: 1.5; /* Match textarea line-height */
+  user-select: none;
+  overflow: hidden;
+  white-space: pre; /* Essential for line breaks */
+  box-shadow: 1px 0 0 var(--border-color);
+  position: relative; /* For the box-shadow */
+}
+
+#jsonEditor {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 0.9em;
+  line-height: 1.5; /* Match line-numbers line-height */
+  background-color: var(--editor-bg-color);
+  color: var(--editor-text-color);
+  resize: none; /* Disable native textarea resize */
+  overflow: auto; /* Enable scrolling */
+  white-space: pre; /* Keep formatting */
+}
+
+#jsonEditor::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+#jsonEditor::-webkit-scrollbar-thumb {
+  background-color: var(--splitter-color);
+  border-radius: 4px;
+}
+
+#jsonEditor::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.error-display {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: var(--error-bg-color);
+  color: var(--error-text-color);
+  font-size: 0.85em;
+  line-height: 1.4;
+  overflow: hidden;
+}
+
+.error-summary {
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  padding-right: 20px; /* Space for expand/collapse arrow */
+}
+
+.error-summary:hover {
+  text-decoration: underline;
+}
+
+.error-summary::after {
+  content: "▼"; /* Down arrow */
+  position: absolute;
+  right: 0;
+  transition: transform 0.2s ease-in-out;
+}
+
+.error-summary.expanded::after {
+  content: "▲"; /* Up arrow */
+  transform: rotate(180deg);
+}
+
+.error-details {
+  padding-top: 5px;
+  max-height: 200px; /* Limit height for scroll */
+  overflow-y: auto;
+  border-top: 1px solid var(--error-text-color);
+  margin-top: 5px;
+}
+
+.error-details.collapsed {
+  max-height: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.error-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.error-details li {
+  margin-bottom: 3px;
+}
+
+/* SVG Diagram Styling */
+#diagramSvg {
+  flex-grow: 1;
+  overflow: visible; /* Allow content to draw slightly outside if needed */
+  background-color: var(--editor-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#diagramSvg text {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  fill: var(--diagram-text-fill);
+  pointer-events: none; /* Prevent text from interfering with drag/selection */
+  user-select: none;
+}
+
+#diagramSvg .node {
+  fill: var(--diagram-node-fill);
+  stroke: var(--diagram-node-stroke);
+  stroke-width: 1.5;
+}
+
+#diagramSvg .edge {
+  stroke: var(--diagram-edge-stroke);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+#diagramSvg marker {
+  fill: var(--diagram-marker-fill);
+  stroke: var(--diagram-marker-fill);
+}
+
+#diagramSvg .edge-label {
+  fill: var(--diagram-text-fill);
+  font-size: 0.8em;
+  text-anchor: middle;
+}
+
+/* Sequence Diagram specific */
+#diagramSvg .participant-header {
+  fill: var(--diagram-participant-fill);
+  stroke: var(--diagram-participant-stroke);
+  stroke-width: 1;
+}
+#diagramSvg .lifeline {
+  stroke: var(--diagram-participant-stroke);
+  stroke-dasharray: 4 2;
+  stroke-width: 1;
+}
+#diagramSvg .message-line {
+  fill: none;
+  stroke: var(--diagram-edge-stroke);
+  stroke-width: 1.5;
+}
+#diagramSvg .message-line.reply {
+  stroke-dasharray: 5 3;
+}
+#diagramSvg .message-label {
+  fill: var(--diagram-text-fill);
+  font-size: 0.85em;
+}
+
+/* ERD specific */
+#diagramSvg .entity-box {
+  fill: var(--diagram-entity-fill);
+  stroke: var(--diagram-entity-stroke);
+  stroke-width: 1.5;
+}
+#diagramSvg .entity-title {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#diagramSvg .attribute {
+  font-size: 0.9em;
+}
+#diagramSvg .attribute.pk {
+  text-decoration: underline;
+}
+#diagramSvg .attribute.fk {
+  font-style: italic;
+}
+#diagramSvg .attribute.unique::after {
+  content: " ★";
+  font-size: 0.8em;
+  vertical-align: super;
+}
+#diagramSvg .relationship-line {
+  fill: none;
+  stroke: var(--diagram-edge-stroke);
+  stroke-width: 1.5;
+}
+#diagramSvg .crow-foot {
+  fill: var(--diagram-marker-fill);
+  stroke: var(--diagram-marker-fill);
+  stroke-width: 1.5;
+}
+#diagramSvg .cardinality-circle {
+  fill: var(--diagram-node-fill);
+  stroke: var(--diagram-edge-stroke);
+  stroke-width: 1.5;
+}

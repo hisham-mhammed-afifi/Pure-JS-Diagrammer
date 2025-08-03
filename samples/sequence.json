@@ -1,0 +1,13 @@
+{
+  "type": "sequence",
+  "participants": ["User", "Web App", "Auth Service", "Database"],
+  "messages": [
+    { "from": "User", "to": "Web App", "text": "Login Request (user, pass)" },
+    { "from": "Web App", "to": "Auth Service", "text": "Authenticate(token)" },
+    { "from": "Auth Service", "to": "Auth Service", "text": "Validate Token" },
+    { "from": "Auth Service", "to": "Web App", "text": "200 OK (Auth Token)" },
+    { "from": "Web App", "to": "Database", "text": "Query User Profile" },
+    { "from": "Database", "to": "Web App", "text": "Rows (Profile Data)" },
+    { "from": "Web App", "to": "User", "text": "200 OK (Profile Page)" }
+  ]
+}

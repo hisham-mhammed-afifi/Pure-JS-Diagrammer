@@ -1,0 +1,20 @@
+{
+  "type": "flowchart",
+  "direction": "TD",
+  "nodes": [
+    { "id": "A", "label": "Start Process" },
+    { "id": "B", "label": "Perform Task 1" },
+    { "id": "C", "label": "Decision Point: Is Data Valid?" },
+    { "id": "D", "label": "Process Valid Data" },
+    { "id": "E", "label": "Handle Invalid Data" },
+    { "id": "F", "label": "End Process" }
+  ],
+  "edges": [
+    { "from": "A", "to": "B", "label": "Init" },
+    { "from": "B", "to": "C" },
+    { "from": "C", "to": "D", "label": "Yes" },
+    { "from": "C", "to": "E", "label": "No" },
+    { "from": "D", "to": "F", "label": "Complete" },
+    { "from": "E", "to": "F", "label": "Error" }
+  ]
+}

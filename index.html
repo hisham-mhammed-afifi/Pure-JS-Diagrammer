@@ -1,0 +1,71 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pure JS Diagrammer</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-pane">
+        <div class="controls">
+          <button id="formatJsonBtn">Format JSON</button>
+          <div class="sample-buttons">
+            <button id="sampleFlowchartBtn">Sample Flowchart</button>
+            <button id="sampleSequenceBtn">Sample Sequence</button>
+            <button id="sampleErdBtn">Sample ERD</button>
+          </div>
+          <button id="renderBtn">Render</button>
+          <button id="exportSvgBtn">Export SVG</button>
+          <button id="exportPngBtn">Export PNG</button>
+          <button id="copyShareUrlBtn">Copy Share URL</button>
+          <button id="themeToggleBtn" aria-label="Toggle dark/light theme">
+            🌙
+          </button>
+        </div>
+        <div class="editor-wrapper">
+          <div class="line-numbers" aria-hidden="true"></div>
+          <textarea
+            id="jsonEditor"
+            spellcheck="false"
+            aria-label="JSON input for diagram definition"
+          ></textarea>
+        </div>
+        <div
+          id="errorDisplay"
+          class="error-display"
+          role="alert"
+          aria-live="polite"
+        >
+          <div class="error-summary"></div>
+          <div class="error-details collapsed"></div>
+        </div>
+      </div>
+      <div
+        class="splitter"
+        aria-label="Drag to resize panes"
+        role="separator"
+        tabindex="0"
+      ></div>
+      <div class="right-pane">
+        <svg
+          id="diagramSvg"
+          width="100%"
+          height="100%"
+          viewBox="0 0 800 600"
+          preserveAspectRatio="xMidYMid meet"
+          aria-label="Diagram preview"
+        ></svg>
+        <canvas id="diagramCanvas" style="display: none"></canvas>
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

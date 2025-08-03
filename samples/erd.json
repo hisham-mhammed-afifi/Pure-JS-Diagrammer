@@ -1,0 +1,47 @@
+{
+  "type": "erd",
+  "entities": [
+    {
+      "name": "User",
+      "attributes": [
+        { "name": "user_id", "type": "INT", "pk": true },
+        { "name": "username", "type": "VARCHAR(50)", "unique": true },
+        { "name": "email", "type": "VARCHAR(100)", "unique": true },
+        { "name": "registration_date", "type": "TIMESTAMP" }
+      ]
+    },
+    {
+      "name": "Product",
+      "attributes": [
+        { "name": "product_id", "type": "INT", "pk": true },
+        { "name": "name", "type": "VARCHAR(255)" },
+        { "name": "price", "type": "DECIMAL(10,2)" },
+        { "name": "stock_quantity", "type": "INT" }
+      ]
+    },
+    {
+      "name": "Order",
+      "attributes": [
+        { "name": "order_id", "type": "INT", "pk": true },
+        { "name": "user_id", "type": "INT", "fk": "User.user_id" },
+        { "name": "order_date", "type": "TIMESTAMP" },
+        { "name": "total_amount", "type": "DECIMAL(10,2)" }
+      ]
+    },
+    {
+      "name": "OrderItem",
+      "attributes": [
+        { "name": "order_item_id", "type": "INT", "pk": true },
+        { "name": "order_id", "type": "INT", "fk": "Order.order_id" },
+        { "name": "product_id", "type": "INT", "fk": "Product.product_id" },
+        { "name": "quantity", "type": "INT" },
+        { "name": "price_at_order", "type": "DECIMAL(10,2)" }
+      ]
+    }
+  ],
+  "relationships": [
+    { "from": "User", "to": "Order", "cardinality": "1..*" },
+    { "from": "Order", "to": "OrderItem", "cardinality": "1..*" },
+    { "from": "Product", "to": "OrderItem", "cardinality": "1..*" }
+  ]
+}
