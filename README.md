@@ -1,6 +1,6 @@
 # Pure JS Diagrammer
 
-![Pure JS Diagrammer]("https://hisham-mhammed-afifi.github.io/Pure-JS-Diagrammer/image.png" "Pure JS Diagrammer screenshot")
+![Pure JS Diagrammer](https://hisham-mhammed-afifi.github.io/Pure-JS-Diagrammer/image.png "Pure JS Diagrammer screenshot")
 
 A small, dependency-free tool to draw **Flowcharts**, **Sequence Diagrams**, and **ERDs** from JSON.
 Runs in the browser, renders to **SVG**, exports **SVG/PNG**, and supports **shareable URLs**.
